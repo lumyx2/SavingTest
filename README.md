@@ -16,9 +16,20 @@ This example is the result of me asking a [Question](https://forums.unrealengine
 # Implemented Features
 Chatouille's implementation serialises a `UObject` (and its subobjects) to a file that is written to disk. I have wrapped his code into a `static` Blueprint library. Additionally, I wrote a `SavingSystem` class that can make use of the functions to serialise the top `UObject` (and subobjects) to a `TArray<uint8>` inside a `USaveGame` file. There is also a function to serialise it externally but keep a record inside the `USaveGame`. This also makes it possible to easily open other save file's serialised objects. 
 
+# Not Implemented Feature
+
+The `Async` event hasn't been implemented correctly. I may add it later on, but for now it's not functional. 
+
 # *Tagging Properties correctly*
 Make sure you tag what you want to be serialised with 
 `UPROPERTY(SaveGame)`. Obviously, other properties can also be used. 
+
+# NOTE when Deserialising UObjects
+
+The `InOuter` passed to 
+`DeserializeUObjectFromByteArray(TArray<uint8>& AllBytes, UObject* InOuter)` must be a `WorldActor` when deserialising another Actor. As far as I know, this is necessary for Unreal to spawn Actors in the world. I have only tested deserialising `UObjects` from the `GameInstance`. 
+
+
 
 ---
 
